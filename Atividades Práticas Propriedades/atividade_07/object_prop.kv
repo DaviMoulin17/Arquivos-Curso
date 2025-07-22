@@ -1,0 +1,17 @@
+<ControleWidget>:
+    target_label: meu_label_alvo
+
+    orientation: "vertical"
+    padding: 20
+    spacing: 10
+
+    Label:
+        id: meu_label_alvo
+        text: "Texto original"
+        font_size: 28
+
+    Button:
+        text: "Mudar texto do Label"
+        size_hint_y: None
+        height: "48dp"
+        on_release: root.mudar_texto_alvo()

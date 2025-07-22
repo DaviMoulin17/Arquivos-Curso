@@ -1,0 +1,14 @@
+<ToggleStateWidget>:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 10
+
+    ToggleButton:
+        text: "Ativar / Desativar"
+        on_state: root.on_toggle_state(self, self.state)
+        size_hint_y: None
+        height: "48dp"
+
+    Label:
+        text: 'Ativo' if root.is_active else 'Inativo'
+        font_size: 32

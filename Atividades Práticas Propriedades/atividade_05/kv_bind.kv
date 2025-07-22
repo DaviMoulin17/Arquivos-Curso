@@ -1,0 +1,27 @@
+#:import Clock kivy.clock.Clock
+
+<MyContainer>:
+    orientation: "vertical"
+    padding: 20
+    spacing: 10
+
+    TextInput:
+        id: meu_input
+        multiline: False
+        font_size: 24
+
+    Label:
+        text: meu_input.text
+        font_size: 28
+
+#:import Clock kivy.clock.Clock
+
+Label:
+    id: status_label
+    text: ""
+    font_size: 24
+
+    on_text:
+        self.text = "Você está digitando..."
+        Clock.unschedule(self._reset_event) if hasattr(self, "_reset_event") else None
+        self._reset_event = Clock.schedule_once(lambda dt: setattr(self, 'text', ""), 1.5)

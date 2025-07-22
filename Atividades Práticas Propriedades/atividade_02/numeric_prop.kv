@@ -1,0 +1,13 @@
+<Contador>:
+    orientation: "vertical"
+    padding: 20
+    spacing: 10
+
+    Label:
+        text: str(root.conta)
+        font_size: 48
+
+    Button:
+        text: "Aumentar"
+        font_size: 32
+        on_release: root.aumentar()

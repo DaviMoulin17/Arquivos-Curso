@@ -1,0 +1,21 @@
+<InputPropWidget>:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 10
+
+    TextInput:
+        id: meu_input_texto
+        multiline: False
+        size_hint_y: None
+        height: "40dp"
+
+    Label:
+        id: label_id
+        text: ""
+
+    Button:
+        text: "Confirmar"
+        size_hint_y: None
+        height: "40dp"
+        on_release:
+            label_id.text = meu_input_texto.text
