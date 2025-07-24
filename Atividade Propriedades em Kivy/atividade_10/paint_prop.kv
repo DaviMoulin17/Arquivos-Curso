@@ -1,0 +1,23 @@
+<PaintApp>:
+    orientation: "vertical"
+
+    BoxLayout:
+        size_hint_y: None
+        height: "50dp"
+        spacing: 10
+        padding: 10
+
+        Button:
+            text: "Vermelho"
+            on_release: paint_area.set_draw_color([1, 0, 0, 1])
+
+        Button:
+            text: "Verde"
+            on_release: paint_area.set_draw_color([0, 1, 0, 1])
+
+        Button:
+            text: "Azul"
+            on_release: paint_area.set_draw_color([0, 0, 1, 1])
+
+    MyPaintWidget:
+        id: paint_area

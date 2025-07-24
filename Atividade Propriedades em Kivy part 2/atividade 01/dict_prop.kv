@@ -1,0 +1,30 @@
+<UserProfileWidget>:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 10
+
+    # Exibe o nome
+    Label:
+        id: name_label
+        text: f"Nome: {root.user_data['name']}"
+        font_size: 20
+
+    # Exibe a idade (observe o uso do f-string moderno)
+    Label:
+        id: age_label
+        text: f"Idade: {root.user_data['age']}"
+        font_size: 20
+
+    # Exibe a cidade
+    Label:
+        id: city_label
+        text: f"Cidade: {root.user_data['city']}"
+        font_size: 20
+
+    # Botão para atualizar a idade
+    Button:
+        text: "Incrementar idade"
+        font_size: 18
+        size_hint_y: None
+        height: 50
+        on_press: root.update_age()

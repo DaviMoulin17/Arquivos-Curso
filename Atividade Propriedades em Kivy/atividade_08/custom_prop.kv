@@ -1,0 +1,34 @@
+<PlayerInfo>:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 10
+
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+        Label:
+            text: "Nome do Jogador:"
+            size_hint_x: 0.4
+        TextInput:
+            text: root.player_name
+            multiline: False
+            on_text: root.player_name = self.text
+
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+        Label:
+            text: f"Pontuação: {root.player_score}"
+        Button:
+            text: "Incrementar Pontuação"
+            on_release: root.incrementar_pontuacao()
+
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+        ToggleButton:
+            text: "Online"
+            state: 'down' if root.is_online else 'normal'
+            on_state: root.is_online = (self.state == 'down')
+        Label:
+            text: "Status: Online" if root.is_online else "Status: Offline"
