@@ -1,0 +1,26 @@
+<ThemeRoot>:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 20
+
+    canvas.before:
+        Color:
+            rgba: app.app_theme['secondary']
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Label:
+        text: "Tema Dinâmico com DictProperty"
+        color: app.app_theme['primary']
+        font_size: '24sp'
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    Button:
+        text: "Alternar Tema"
+        size_hint_y: None
+        height: '48dp'
+        background_color: app.app_theme['primary']
+        color: app.app_theme['secondary']
+        on_press: app.toggle_theme()

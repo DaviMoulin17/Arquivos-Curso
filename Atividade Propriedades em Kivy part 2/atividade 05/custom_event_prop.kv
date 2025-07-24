@@ -1,0 +1,19 @@
+<MyCustomWidget>:
+    orientation: 'vertical'
+    spacing: 10
+    padding: 20
+
+    Label:
+        id: log_label
+        text: "Aguardando mensagem..."
+
+    TextInput:
+        id: input_msg
+        multiline: False
+        hint_text: "Digite uma nova mensagem"
+
+    Button:
+        text: "Atualizar Mensagem"
+        on_release:
+            root.message = input_msg.text
+            log_label.text = "Nova mensagem: " + root.message

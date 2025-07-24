@@ -1,0 +1,29 @@
+<StatusDisplayWidget>:
+    orientation: 'vertical'
+    size_hint_y: 0.5
+    padding: 20
+
+    Label:
+        text: "Status Atual:"
+        font_size: 20
+    Label:
+        text: root.global_state_obj.current_status
+        font_size: 24
+        color: 0, 1, 0, 1
+
+<StatusChangerWidget>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: '40dp'
+    padding: 10
+    spacing: 10
+
+    TextInput:
+        id: input_status
+        multiline: False
+        size_hint_x: 0.7
+
+    Button:
+        text: "Mudar Status"
+        size_hint_x: 0.3
+        on_press: root.change_status()
