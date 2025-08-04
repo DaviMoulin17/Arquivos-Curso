@@ -5,34 +5,34 @@ from kivy.clock import Clock
 
 class PainelControle(BoxLayout):
     status = StringProperty("IA Desligada")
-    ameaça = NumericProperty(0)
+    ameaca = NumericProperty(0)
     ia_ativa = BooleanProperty(False)
 
     def alternar_ia(self):
         self.ia_ativa = not self.ia_ativa
         if self.ia_ativa:
-            self.status = "IA Ativada"
-            Clock.schedule_interval(self.aumentar_ameaça, 1)
+            self.status = "IA Ativada ✅"
+            Clock.schedule_interval(self.aumentar_ameaca, 1)
         else:
-            self.status = "IA Desligada"
-            self.ameaça = 0
-            Clock.unschedule(self.aumentar_ameaça)
+            self.status = "IA Desligada ❌"
+            self.ameaca = 0
+            Clock.unschedule(self.aumentar_ameaca)
 
-    def aumentar_ameaça(self, dt):
-        if self.ameaça < 100:
-            self.ameaça += 5
+    def aumentar_ameaca(self, dt):
+        if self.ameaca < 100:
+            self.ameaca += 5
         else:
-            self.status = "Ameaça Máxima! ⚠️"
-            Clock.unschedule(self.aumentar_ameaça)
+            self.status = "⚠️ Ameaça Máxima!"
+            Clock.unschedule(self.aumentar_ameaca)
 
     def enviar_comando(self):
-        comando = self.ids.campo_comando.text
-        if not comando.strip():
+        comando = self.ids.campo_comando.text.strip()
+        if not comando:
             self.status = "Digite um comando válido."
             return
-
+        
         if self.ia_ativa:
-            self.status = f"Comando recebido: {comando}"
+            self.status = f"Comando executado: {comando}"
         else:
             self.status = "Erro: IA está desligada."
         
@@ -42,5 +42,5 @@ class PainelIAApp(App):
     def build(self):
         return PainelControle()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     PainelIAApp().run()
