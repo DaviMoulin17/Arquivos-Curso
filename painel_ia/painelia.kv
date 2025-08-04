@@ -1,0 +1,36 @@
+<PainelControle>:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 15
+
+    Label:
+        text: root.status
+        font_size: '20sp'
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    ProgressBar:
+        max: 100
+        value: root.ameaça
+        height: 30
+        size_hint_y: None
+
+    ToggleButton:
+        text: "Ativar IA" if not root.ia_ativa else "Desativar IA"
+        on_press: root.alternar_ia()
+        size_hint_y: None
+        height: 50
+
+    BoxLayout:
+        size_hint_y: None
+        height: 40
+        spacing: 10
+
+        TextInput:
+            id: campo_comando
+            hint_text: "Digite um comando para a IA"
+            multiline: False
+
+        Button:
+            text: "Enviar"
+            on_press: root.enviar_comando()
