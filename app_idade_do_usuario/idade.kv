@@ -1,0 +1,31 @@
+<MainWidget>:
+    orientation: "vertical"
+    padding: 20
+    spacing: 15
+
+    TextInput:
+        id: campo_nome
+        hint_text: "Digite seu nome"
+        multiline: False
+        size_hint_y: None
+        height: 40
+
+    TextInput:
+        id: campo_idade
+        hint_text: "Digite sua idade"
+        input_filter: "int"  # apenas números
+        multiline: False
+        size_hint_y: None
+        height: 40
+
+    Button:
+        text: "Enviar"
+        size_hint_y: None
+        height: 50
+        on_press: root.verificar_idade()
+
+    Label:
+        text: root.mensagem
+        halign: "center"
+        valign: "middle"
+        text_size: self.size
