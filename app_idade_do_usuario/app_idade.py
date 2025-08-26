@@ -1,7 +1,9 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import StringProperty
+from kivy.core.window import Window
 
+Window.clearcolor = (0.9, 0.9, 0.9, 1)
 class MainWidget(BoxLayout):
     mensagem = StringProperty("Digite seus dados acima")
 
@@ -11,22 +13,24 @@ class MainWidget(BoxLayout):
 
         # Verificação básica
         if not nome or not idade_texto:
-            self.mensagem = "⚠️ Preencha todos os campos!"
+            self.mensagem = "Preencha todos os campos!"
             return
 
         # Tentando converter a idade
         try:
             idade = int(idade_texto)
         except ValueError:
-            self.mensagem = "⚠️ Digite apenas números na idade!"
+            self.mensagem = "Digite apenas números na idade!"
             return
 
         # Condição de maioridade
         if idade < 18:
             self.mensagem = f"Olá, {nome}! Você é menor de idade."
-        else:
+        elif idade < 60:
             self.mensagem = f"Olá, {nome}! Você é maior de idade."
-
+        else:
+            self.mensagem = f"Olá, {nome}! Você é idoso e merece muito respeito."
+            
 class IdadeApp(App):
     def build(self):
         return MainWidget()
