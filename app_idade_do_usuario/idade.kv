@@ -25,6 +25,14 @@
         size_hint_y: None
         height: 40
 
+    # instrução de exemplo para o nome
+    Label:
+        text: "Ex.: João da Silva"
+        font_size: 14
+        color: 0.3,0.3,0.3,1
+        size_hint_y: None
+        height: 20
+
     TextInput:
         id: campo_idade
         hint_text: "Digite sua idade"
@@ -32,6 +40,14 @@
         multiline: False
         size_hint_y: None
         height: 40
+
+    # instrução de exemplo para a idade
+    Label:
+        text: "Apenas números de 0 a 120"
+        font_size: 14
+        color: 0.3,0.3,0.3,1
+        size_hint_y: None
+        height: 20
 
     Button:
         text: "Enviar"
@@ -59,5 +75,3 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-
-    
