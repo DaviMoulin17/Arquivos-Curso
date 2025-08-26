@@ -4,8 +4,13 @@ from kivy.properties import StringProperty
 from kivy.core.window import Window
 
 Window.clearcolor = (0.9, 0.9, 0.9, 1)
+
 class MainWidget(BoxLayout):
     mensagem = StringProperty("Digite seus dados acima")
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.mensagens = []
 
     def verificar_idade(self):
         nome = self.ids.campo_nome.text.strip()
@@ -30,18 +35,29 @@ class MainWidget(BoxLayout):
 
         # Condição de maioridade
         if idade < 18:
-            self.mensagem = f"Olá, {nome}! Você é menor de idade."
+            mensagem = f"Olá, {nome}! Você é menor de idade."
         elif idade < 60:
-            self.mensagem = f"Olá, {nome}! Você é maior de idade."
+            mensagem = f"Olá, {nome}! Você é maior de idade."
         else:
-            self.mensagem = f"Olá, {nome}! Você é idoso e merece muito respeito."
+            mensagem = f"Olá, {nome}! Você é idoso e merece muito respeito."
             
-        # Historico
-        if not hasattr(self, "mensagens"):
-            self.mensagens = []
+        # Atualizar mensagem atual
+        self.mensagem = mensagem
+        
+        # Adicionar ao histórico com nome e idade
+        historico_item = f"{nome} ({idade} anos): {mensagem.split('!')[1].strip()}"
+        self.mensagens.append(historico_item)
+        
+        # Limitar o histórico aos 5 últimos registros
+        if len(self.mensagens) > 5:
+            self.mensagens = self.mensagens[-5:]
             
-        self.mensagens.append(self.mensagem)
-        self.ids.label_resultado.text = "\n".join(self.mensagens)
+        # Atualizar o histórico
+        self.ids.label_historico.text = "\n".join(self.mensagens)
+        
+        # Limpar os campos
+        self.ids.campo_nome.text = ""
+        self.ids.campo_idade.text = ""
         
 class IdadeApp(App):
     def build(self):
