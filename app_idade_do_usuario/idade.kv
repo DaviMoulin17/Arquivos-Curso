@@ -3,6 +3,21 @@
     padding: 20
     spacing: 15
 
+    size_hint: None, None
+    size: 700, 400
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    Label:
+        text:'App de Idades'
+        font_size: 32
+        bold: True
+        halign: "center"
+        valign: "middle"
+        size_hint_y: None
+        height: 60
+        color: 0, 0.55, 1, 1
+        text_size: self.size
+
     TextInput:
         id: campo_nome
         hint_text: "Digite seu nome"
@@ -20,12 +35,29 @@
 
     Button:
         text: "Enviar"
+        font_size: 25
         size_hint_y: None
         height: 50
+        background_normal: ""              
+        background_color: 0, 0.55, 1, 1    
+        color: 1, 1, 1, 1                  
         on_press: root.verificar_idade()
 
     Label:
+        id: label_resultado
         text: root.mensagem
         halign: "center"
         valign: "middle"
+        text: root.mensagem 
+        font_size: 20
         text_size: self.size
+        color: 0, 0.55, 1, 1
+
+        canvas.before:
+            Color:
+                rgba: 0.9, 0.9, 0.9, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+    
