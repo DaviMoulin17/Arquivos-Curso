@@ -22,6 +22,11 @@ class MainWidget(BoxLayout):
         except ValueError:
             self.mensagem = "Digite apenas números na idade!"
             return
+        
+        # Validação de idade
+        if idade < 0 or idade > 120:
+            self.mensagem = "Idade inválida!"
+            return
 
         # Condição de maioridade
         if idade < 18:
@@ -31,6 +36,13 @@ class MainWidget(BoxLayout):
         else:
             self.mensagem = f"Olá, {nome}! Você é idoso e merece muito respeito."
             
+        # Historico
+        if not hasattr(self, "mensagens"):
+            self.mensagens = []
+            
+        self.mensagens.append(self.mensagem)
+        self.ids.label_resultado.text = "\n".join(self.mensagens)
+        
 class IdadeApp(App):
     def build(self):
         return MainWidget()
