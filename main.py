@@ -1,96 +1,22 @@
 from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.image import AsyncImage
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.image import AsyncImage
 from kivy.core.window import Window
-import random
-from kivy.uix.widget import Widget
 from kivy.graphics import Color, Rectangle
+import random
 
+# Fundo da janela
 Window.clearcolor = (0/255, 0/255, 80/255, 1)
 
-class FilmeApp(App):
-    def build(self):
-        layout = BoxLayout(orientation="vertical", spacing=10, padding=10)
-
-        # Título
-        self.lbl_titulo = Label(
-            text="App de Sugestão de Filme",
-            font_size=30,
-            color=(1, 1, 0, 1),
-            size_hint_y=None,
-            halign="center",
-            valign="middle"
-        )
-        self.lbl_titulo.bind(size=lambda inst, val: setattr(inst, "text_size", (inst.width, None)))
-        layout.add_widget(self.lbl_titulo)
-
-        # Entrada de nome e seleção de gênero
-        self.txt_nome = TextInput(
-            hint_text="Digite seu nome",
-            font_size=20,
-            size_hint_y=None,
-            height=50,
-            multiline=False
-        )
-        layout.add_widget(self.txt_nome)
-
-        self.spinner_genero = Spinner(
-            text="Selecione um gênero",
-            values=("Ação", "Comédia", "Terror", "Romance", "Animação", "Ficção Científica"),
-            font_size=18,
-            size_hint_y=None,
-            height=50
-        )
-        layout.add_widget(self.spinner_genero)
-
-        # Botões
-        btn_layout = BoxLayout(size_hint_y=None, height=50, spacing=10)
-        btn_sugerir = Button(text="Sugerir Filme", background_color=(0.678, 0.847, 0.902, 1))
-        btn_sugerir.bind(on_release=self.sugerir_filme)
-        btn_limpar = Button(text="Limpar", background_color=(1.0, 0.341, 0.2, 1))
-        btn_limpar.bind(on_release=self.limpar)
-        btn_layout.add_widget(btn_sugerir)
-        btn_layout.add_widget(btn_limpar)
-        layout.add_widget(btn_layout)
-
-        # Mensagem
-        self.lbl_mensagem = Label(
-            text="Digite seu nome, escolha um gênero e clique em Sugerir Filme",
-            font_size=18,
-            color=(1, 1, 0, 1),
-            size_hint_y=None,
-            height=40,
-            halign="center",
-            valign="middle"
-        )
-        self.lbl_mensagem.bind(size=lambda inst, val: setattr(inst, "text_size", (inst.width, None)))
-        layout.add_widget(self.lbl_mensagem)
-
-        # Imagem do filme
-        self.img_filme = AsyncImage(source="", allow_stretch=True, keep_ratio=True)
-        layout.add_widget(self.img_filme)
-
-        # Histórico
-        self.scroll = ScrollView(size_hint=(1, 0.3))
-        self.layout_historico = GridLayout(cols=1, spacing=5, size_hint_y=None)
-        self.layout_historico.bind(minimum_height=self.layout_historico.setter("height"))
-        self.scroll.add_widget(self.layout_historico)
-        layout.add_widget(Label(text="Histórico:", font_size=20, size_hint_y=None, height=30))
-        layout.add_widget(self.scroll)
-
-        return layout
-
-    def sugerir_filme(self, instance):
-        nome = self.txt_nome.text.strip()
-        genero = self.spinner_genero.text
-
-        filmes = filmes = {
+# Lista de filmes
+filmes = {
     "Ação": [
         ("John Wick", 2014, "https://img.elo7.com.br/product/zoom/265E425/big-poster-filme-john-wick-lo02-tamanho-90x60-cm-poster-cinema.jpg?_gl=1*1h13t2j*_gcl_au*MTMzMzY3ODQ0Ny4xNzU2NDAyODE1*_ga*OTk3NjQ4MTA0LjE3NTY0MDI4MTU.*_ga_22YVRK2WCW*czE3NTY0MDI4MTUkbzEkZzAkdDE3NTY0MDI4MTUkajYwJGwwJGgxODE5Nzk0OTIw"),
         ("Mad Max: Estrada da Fúria", 2015, "https://img.elo7.com.br/product/zoom/265F0ED/big-poster-filme-mad-max-estrada-da-furia-lo08-tam-90x60-cm-poster-cinema.jpg?_gl=1*e4h89f*_gcl_au*MTMzMzY3ODQ0Ny4xNzU2NDAyODE1*_ga*OTk3NjQ4MTA0LjE3NTY0MDI4MTU.*_ga_22YVRK2WCW*czE3NTY0MDI4MTUkbzEkZzEkdDE3NTY0MDMzOTkkajYwJGwwJGgxODE5Nzk0OTIw"),
@@ -139,41 +65,175 @@ class FilmeApp(App):
         ("Guardiões da Galáxia", 2014, "https://i.pinimg.com/736x/d8/49/e1/d849e1330681c2b7d8b9ecbbf0b17dd9.jpg"),
         ("Avatar", 2009, "https://i.pinimg.com/736x/d2/71/4a/d2714af5f61ec69b65db6959718f0543.jpg"),
         ("De Volta para o Futuro", 1985, "https://i.pinimg.com/736x/ba/6f/f2/ba6ff2005256ae1405e4a8cc14b98f07.jpg")
+    ],
+    "Fantasia": [
+    # Harry Potter
+    ("Harry Potter e a Pedra Filosofal", 2001, "https://i.pinimg.com/1200x/fa/8c/80/fa8c80b1695d091d62efef11ef07d9de.jpg"),
+    ("Harry Potter e a Câmara Secreta", 2002, "https://i.pinimg.com/736x/cd/5e/28/cd5e286a0af2cf3a2a82a04d37bfd575.jpg"),
+    ("Harry Potter e o Prisioneiro de Azkaban", 2004, "https://i.pinimg.com/736x/59/20/81/592081af4aa6d9d6c5300d0c4c1770ed.jpg"),
+    ("Harry Potter e o Cálice de Fogo", 2005, "https://i.pinimg.com/1200x/6a/fd/36/6afd36e8edb795f4eba7acc7f02fe690.jpg"),
+    ("Harry Potter e a Ordem da Fênix", 2007, "https://i.pinimg.com/736x/ca/5b/f2/ca5bf27ff2ef306faf1bb217c65df3b1.jpg"),
+    ("Harry Potter e o Enigma do Príncipe", 2009, "https://i.pinimg.com/1200x/2f/bb/34/2fbb34efd8790e9f9a5e01e8ae2834e1.jpg"),
+    ("Harry Potter e as Relíquias da Morte Parte 1", 2010, "https://i.pinimg.com/736x/4d/ab/cf/4dabcf824a00ebb9093127d1179a794c.jpg"),
+    ("Harry Potter e as Relíquias da Morte Parte 2", 2011, "https://i.pinimg.com/736x/ae/ce/1a/aece1aeba20d092d0ddb8d85ec97b2af.jpg"),
+
+    # Animais Fantásticos
+    ("Animais Fantásticos e Onde Habitam", 2016, "https://i.pinimg.com/1200x/3e/e6/0f/3ee60f6b4ec7abda77a10aa41ca7b0b1.jpg"),
+    ("Animais Fantásticos: Os Crimes de Grindelwald", 2018, "https://i.pinimg.com/1200x/1a/a4/7e/1aa47e20e51842960ab7d5d152152e1c.jpg"),
+    ("Animais Fantásticos: Os Segredos de Dumbledore", 2022, "https://i.pinimg.com/1200x/9b/36/5e/9b365e927b4d10196b7fd515297e39b8.jpg"),
+
+    # O Senhor dos Anéis
+    ("O Senhor dos Anéis: A Sociedade do Anel", 2001, "https://i.pinimg.com/736x/c7/89/fd/c789fd292e75beeb861ee4059317f46a.jpg"),
+    ("O Senhor dos Anéis: As Duas Torres", 2002, "https://i.pinimg.com/1200x/fe/98/28/fe9828d616848f7c4be388ce65718314.jpg"),
+    ("O Senhor dos Anéis: O Retorno do Rei", 2003, "https://i.pinimg.com/736x/bf/87/2e/bf872ee6ee5ae7f31e209731e3c7cda5.jpg"),
+
+    # O Hobbit
+    ("O Hobbit: Uma Jornada Inesperada", 2012, "https://i.pinimg.com/736x/35/d9/62/35d96228dd077cba12fe9c65cbf12fa3.jpg"),
+    ("O Hobbit: A Desolação de Smaug", 2013, "https://i.pinimg.com/736x/fa/46/3d/fa463db3e8b1f24799b8f5fd6a30e9a0.jpg"),
+    ("O Hobbit: A Batalha dos Cinco Exércitos", 2014, "https://i.pinimg.com/1200x/d1/c1/c4/d1c1c4e7d78675223cc8654da731044e.jpg")
     ]
+
 }
 
+# --- Tela 1: Login ---
+class LoginScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        layout = BoxLayout(orientation="vertical", padding=40, spacing=20)
+        with layout.canvas.before:
+            Color(0.1, 0.1, 0.3, 1)
+            self.rect = Rectangle(size=Window.size, pos=self.pos)
+        layout.bind(size=lambda inst, val: setattr(self.rect, "size", val))
+        layout.bind(pos=lambda inst, val: setattr(self.rect, "pos", val))
 
-        if not nome:
-            self.lbl_mensagem.text="Por favor, digite seu nome."
-            return
+        layout.add_widget(Label(text="Bem-vindo ao App de Filmes", font_size=32, color=(1,1,0,1)))
+        self.input_name = TextInput(hint_text="Digite seu nome", font_size=22, multiline=False, size_hint_y=None, height=50)
+        layout.add_widget(self.input_name)
+
+        btn_continue = Button(text="Continuar", size_hint_y=None, height=50, background_color=(0.2,0.7,0.3,1))
+        btn_continue.bind(on_press=self.go_to_suggestion)
+        layout.add_widget(btn_continue)
+        self.add_widget(layout)
+
+    def go_to_suggestion(self, instance):
+        nome = self.input_name.text.strip()
+        if nome:
+            self.manager.get_screen("suggestion").user_name = nome
+            self.manager.current = "suggestion"
+
+# --- Tela 2: Sugestão ---
+class SuggestionScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.user_name = ""
+        self.favoritos = []
+
+        layout = BoxLayout(orientation="vertical", padding=20, spacing=10)
+        with layout.canvas.before:
+            Color(0.05, 0.05, 0.2, 1)
+            self.rect = Rectangle(size=Window.size, pos=self.pos)
+        layout.bind(size=lambda inst, val: setattr(self.rect, "size", val))
+        layout.bind(pos=lambda inst, val: setattr(self.rect, "pos", val))
+
+        self.label_welcome = Label(text="", font_size=26, color=(1,1,0,1))
+        layout.add_widget(self.label_welcome)
+
+        self.spinner = Spinner(text="Selecione um gênero", values=list(filmes.keys()), size_hint_y=None, height=50)
+        layout.add_widget(self.spinner)
+
+        btn_sugerir = Button(text="Sugerir Filme", size_hint_y=None, height=50, background_color=(0.8,0.6,0.2,1))
+        btn_sugerir.bind(on_press=self.sugerir_filme)
+        layout.add_widget(btn_sugerir)
+
+        self.label_filme = Label(text="", font_size=20, color=(1,1,1,1))
+        layout.add_widget(self.label_filme)
+
+        self.img_filme = AsyncImage(source="", allow_stretch=True, keep_ratio=True)
+        layout.add_widget(self.img_filme)
+
+        btn_layout = BoxLayout(size_hint_y=None, height=50, spacing=10)
+        # Botão para adicionar aos favoritos sem sair da tela
+        btn_add_fav = Button(text="Adicionar aos Favoritos", background_color=(0.2,0.5,0.8,1))
+        btn_add_fav.bind(on_press=self.adicionar_favoritos)
+        # Botão para ver favoritos
+        btn_ver_fav = Button(text="Ver Favoritos", background_color=(0.5,0.7,0.2,1))
+        btn_ver_fav.bind(on_press=lambda x: setattr(self.manager, "current", "favoritos"))
+        # Botão voltar para login
+        btn_voltar = Button(text="Voltar", background_color=(0.8,0.2,0.2,1))
+        btn_voltar.bind(on_press=lambda x: setattr(self.manager, "current", "login"))
+
+        btn_layout.add_widget(btn_add_fav)
+        btn_layout.add_widget(btn_ver_fav)
+        btn_layout.add_widget(btn_voltar)
+        layout.add_widget(btn_layout)
+        self.add_widget(layout)
+
+    def on_pre_enter(self, *args):
+        self.label_welcome.text = f"Olá, {self.user_name}! Escolha um gênero:"
+
+    def sugerir_filme(self, instance):
+        genero = self.spinner.text
         if genero not in filmes:
-            self.lbl_mensagem.text="Selecione um gênero válido."
+            self.label_filme.text = "Escolha um gênero válido!"
             return
-
         filme, ano, img = random.choice(filmes[genero])
-        self.lbl_mensagem.text = f"Olá, {nome}! Sua sugestão de filme de {genero} é: {filme} ({ano})"
+        self.label_filme.text = f"{filme} ({ano}) - {genero}"
         self.img_filme.source = img
-        
+        # guarda temporariamente o último filme sugerido
+        self.ultimo_filme = (filme, ano, genero, img)
 
-        # Histórico
-        item_hist = Label(
-            text=f"{filme} ({ano}) - {genero}",
-            font_size=16,
-            size_hint_y=None,
-            height=30,
-            halign="left",
-            valign="middle"
-        )
-        item_hist.bind(size=lambda inst, val: setattr(inst, "text_size", (inst.width, None)))
-        self.layout_historico.add_widget(item_hist)
+    def adicionar_favoritos(self, instance):
+        if hasattr(self, "ultimo_filme"):
+            if self.ultimo_filme not in self.favoritos:
+                self.favoritos.append(self.ultimo_filme)
+            # Atualiza a tela de favoritos
+            self.manager.get_screen("favoritos").favoritos = self.favoritos
 
-    def limpar(self, instance):
-        self.txt_nome.text=""
-        self.spinner_genero.text="Selecione um gênero"
-        self.lbl_mensagem.text="Digite seu nome, escolha um gênero e clique em Sugerir Filme"
-        self.img_filme.source=""
-        self.layout_historico.clear_widgets()
+# --- Tela 3: Favoritos ---
+class FavoritosScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.favoritos = []
 
+        layout = BoxLayout(orientation="vertical", padding=20, spacing=10)
+        with layout.canvas.before:
+            Color(0.1,0.1,0.2,1)
+            self.rect = Rectangle(size=Window.size, pos=self.pos)
+        layout.bind(size=lambda inst, val: setattr(self.rect, "size", val))
+        layout.bind(pos=lambda inst, val: setattr(self.rect, "pos", val))
+
+        layout.add_widget(Label(text="Meus Filmes Favoritos", font_size=26, color=(1,1,0,1)))
+
+        self.scroll = ScrollView()
+        self.grid = GridLayout(cols=2, size_hint_y=None, spacing=10)
+        self.grid.bind(minimum_height=self.grid.setter("height"))
+        self.scroll.add_widget(self.grid)
+        layout.add_widget(self.scroll)
+
+        btn_voltar = Button(text="Voltar", size_hint_y=None, height=50, background_color=(0.8,0.2,0.2,1))
+        btn_voltar.bind(on_press=lambda x: setattr(self.manager, "current", "suggestion"))
+        layout.add_widget(btn_voltar)
+
+        self.add_widget(layout)
+
+    def on_pre_enter(self, *args):
+        self.grid.clear_widgets()
+        for filme, ano, genero, img in self.favoritos:
+            box = BoxLayout(orientation="vertical", size_hint_y=None, height=250, spacing=5)
+            capa = AsyncImage(source=img, allow_stretch=True, keep_ratio=True)
+            titulo = Label(text=f"{filme} ({ano})", font_size=16, color=(1,1,1,1), size_hint_y=None, height=30)
+            box.add_widget(capa)
+            box.add_widget(titulo)
+            self.grid.add_widget(box)
+
+# --- App ---
+class FilmeApp(App):
+    def build(self):
+        sm = ScreenManager()
+        sm.add_widget(LoginScreen(name="login"))
+        sm.add_widget(SuggestionScreen(name="suggestion"))
+        sm.add_widget(FavoritosScreen(name="favoritos"))
+        return sm
 
 if __name__=="__main__":
     FilmeApp().run()
