@@ -1,0 +1,146 @@
+ScreenManager:
+    CadastroScreen:
+    ListagemScreen:
+    EdicaoScreen:
+
+<CadastroScreen>:
+    name: "cadastro"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 12
+        spacing: 10
+
+        Widget:
+            size_hint_y: 1  # Empurra os elementos para o centro
+
+        Label:
+            text: "Cadastrar Filme"
+            size_hint_y: None
+            height: "40dp"
+            font_size: "20sp"
+
+        TextInput:
+            id: titulo_input
+            hint_text: "Título"
+            multiline: False
+            size_hint_y: None
+            height: "30dp"
+
+        Spinner:
+            id: genero_spinner
+            text: "Selecione o gênero"
+            values: ["Ação", "Comédia", "Drama", "Romance", "Terror", "Ficção", "Animação", "fantasia"]
+            size_hint_y: None
+            height: "30dp"
+
+        TextInput:
+            id: ano_input
+            hint_text: "Ano"
+            multiline: False
+            size_hint_y: None
+            height: "30dp"
+            input_filter: "int"
+
+        BoxLayout:
+            size_hint_y: None
+            height: "44dp"
+            spacing: 8
+
+            Button:
+                text: "Salvar"
+                on_release: app.adicionar_filme(titulo_input.text, genero_spinner.text, ano_input.text)
+
+            Button:
+                text: "Ver Lista"
+                on_release: root.manager.current = "listagem"
+
+        Widget:
+            size_hint_y: 1  # Mantém os elementos centralizados verticalmente
+
+<ListagemScreen>:
+    name: "listagem"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 12
+        spacing: 8
+
+        BoxLayout:
+            size_hint_y: None
+            height: "44dp"
+            spacing: 8
+
+            Label:
+                text: "Lista de Filmes"
+                font_size: "20sp"
+                halign: "center"
+                valign: "middle"
+                text_size: self.size
+
+            Button:
+                text: "Novo Filme"
+                size_hint_x: None
+                width: "130dp"
+                on_release: root.manager.current = "cadastro"
+
+        ScrollView:
+            GridLayout:
+                id: lista_container
+                cols: 1
+                spacing: 8
+                size_hint_y: None
+                height: self.minimum_height
+                padding: 4
+
+<EdicaoScreen>:
+    name: "edicao"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 12
+        spacing: 10
+
+        Widget:
+            size_hint_y: 1  # Empurra para centro
+
+        Label:
+            text: "Editar Filme"
+            size_hint_y: None
+            height: "40dp"
+            font_size: "20sp"
+
+        TextInput:
+            id: edit_titulo
+            hint_text: "Título"
+            multiline: False
+            size_hint_y: None
+            height: "30dp"
+
+        Spinner:
+            id: edit_genero
+            text: "Selecione o gênero"
+            values: ["Ação", "Comédia", "Drama", "Romance", "Terror", "Ficção", "Animação", "fantasia"]
+            size_hint_y: None
+            height: "30dp"
+
+        TextInput:
+            id: edit_ano
+            hint_text: "Ano"
+            multiline: False
+            input_filter: "int"
+            size_hint_y: None
+            height: "30dp"
+
+        BoxLayout:
+            size_hint_y: None
+            height: "44dp"
+            spacing: 8
+
+            Button:
+                text: "Salvar Alterações"
+                on_release: app.editar_filme(edit_titulo.text, edit_genero.text, edit_ano.text)
+
+            Button:
+                text: "Cancelar"
+                on_release: root.manager.current = "listagem"
+
+        Widget:
+            size_hint_y: 1  # Mantém centralizado
