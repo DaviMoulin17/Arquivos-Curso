@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Explicação: HTML e CSS básicos</title>
+  <style>
+    /* Display examples */
+    .block {
+      display: block;
+      background: #cce5ff;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .inline {
+      display: inline;
+      background: #d4edda;
+      padding: 5px 10px;
+      margin-right: 5px;
+    }
+    .flex-container {
+      display: flex;
+      gap: 10px;
+      background: #f8d7da;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .flex-item {
+      background: #fff3cd;
+      padding: 10px;
+      border: 1px solid #ffeeba;
+      flex: 1;
+      text-align: center;
+    }
+
+    /* Align */
+    .text-center {
+      text-align: center;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* Pseudo-class */
+    a {
+      color: blue;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+    a:hover {
+      color: red;
+      text-decoration: underline;
+    }
+
+    /* Pseudo-elements */
+    .pseudo::before {
+      content: "👉 ";
+      color: green;
+    }
+    .pseudo::after {
+      content: " 👈";
+      color: green;
+    }
+
+    /* Opacity */
+    .opaque {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .semi-transparent {
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Explicação básica de HTML e CSS</h1>
+
+  <!-- Icons -->
+  <section>
+    <h2>Ícones (Icons)</h2>
+    <p>Ícones podem ser imagens, SVG ou fontes de ícones.</p>
+    <!-- Exemplo com emoji -->
+    <p>Exemplo simples de ícone: ⭐️ 🚀 📚</p>
+    <!-- Exemplo com imagem -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Plain_green_tick.svg" alt="Ícone de check" width="30" />
+  </section>
+
+  <!-- Lists -->
+  <section>
+    <h2>Listas (Lists)</h2>
+    <p>Listas organizam itens em ordem ou não.</p>
+    <ul>
+      <li>Item não ordenado 1</li>
+      <li>Item não ordenado 2</li>
+    </ul>
+    <ol>
+      <li>Item ordenado 1</li>
+      <li>Item ordenado 2</li>
+    </ol>
+    <dl>
+      <dt>HTML</dt>
+      <dd>Linguagem de marcação para páginas web.</dd>
+      <dt>CSS</dt>
+      <dd>Folhas de estilo para estilizar páginas web.</dd>
+    </dl>
+  </section>
+
+  <!-- Display -->
+  <section>
+    <h2>Display</h2>
+    <p>Controla como o elemento é exibido.</p>
+    <div class="block">Este é um elemento <strong>block</strong> (bloco).</div>
+    <span class="inline">Este é um elemento <strong>inline</strong> (linha).</span>
+    <span class="inline">Outro inline</span>
+    <div class="flex-container">
+      <div class="flex-item">Flex item 1</div>
+      <div class="flex-item">Flex item 2</div>
+      <div class="flex-item">Flex item 3</div>
+    </div>
+  </section>
+
+  <!-- Align -->
+  <section>
+    <h2>Alinhamento (Align)</h2>
+    <p class="text-center">Este texto está centralizado usando <code>text-align: center;</code></p>
+  </section>
+
+  <!-- Combinators -->
+  <section>
+    <h2>Combinadores (Combinators)</h2>
+    <p>Seletores combinam elementos para aplicar estilos.</p>
+    <style>
+      /* Combinators inside section */
+      div > p {
+        color: green;
+      }
+      ul li + li {
+        color: red;
+      }
+    </style>
+    <div>
+      <p>Parágrafo filho direto do div (verde)</p>
+      <p>Outro parágrafo filho direto do div (verde)</p>
+    </div>
+    <ul>
+      <li>Primeiro item</li>
+      <li>Segundo item (vermelho porque vem depois do primeiro)</li>
+      <li>Terceiro item (vermelho também)</li>
+    </ul>
+  </section>
+
+  <!-- Pseudo-classes -->
+  <section>
+    <h2>Pseudo-classes</h2>
+    <p>Estilos baseados no estado do elemento.</p>
+    <a href="#">Link normal</a>
+    <a href="#">Link com hover (passe o mouse)</a>
+    <ul>
+      <li>Primeiro item</li>
+      <li>Segundo item (selecionado pelo :nth-child(2))</li>
+      <li>Terceiro item</li>
+    </ul>
+    <style>
+      ul li:nth-child(2) {
+        background-color: #ffffcc;
+      }
+    </style>
+  </section>
+
+  <!-- Pseudo-elements -->
+  <section>
+    <h2>Pseudo-elementos</h2>
+    <p class="pseudo">Este parágrafo usa ::before e ::after para adicionar símbolos.</p>
+    <p style="text-align:center;">
+      <span style="font-weight:bold; font-size: 1.2em;">Primeira letra estilizada:</span>
+      <span style="display:inline-block; font-size: 2em; color: orange; font-weight: bold;">
+        H
+      </span>ello!
+    </p>
+  </section>
+
+  <!-- Opacity -->
+  <section>
+    <h2>Opacidade (Opacity)</h2>
+    <div class="opaque">Opaco (opacity: 1)</div>
+    <div class="opaque semi-transparent">Semi-transparente (opacity: 0.5)</div>
+  </section>
+</body>
+</html>

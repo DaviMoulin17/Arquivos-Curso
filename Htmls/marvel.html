@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Pikachu Dançando e Soltando Raio ⚡</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #ffe600, #fff700);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-family: 'Arial', sans-serif;
+      color: #222;
+      margin-bottom: 20px;
+    }
+
+    .pikachu {
+      width: 200px;
+      animation: dance 1s infinite alternate;
+    }
+
+    @keyframes dance {
+      0% { transform: rotate(-5deg) translateY(0); }
+      100% { transform: rotate(5deg) translateY(-10px); }
+    }
+
+    .raio {
+      position: absolute;
+      width: 20px;
+      height: 100px;
+      background: yellow;
+      box-shadow: 0 0 15px yellow;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      animation: raioAnim 0.5s ease-out forwards;
+    }
+
+    @keyframes raioAnim {
+      0% { opacity: 1; height: 0; }
+      100% { opacity: 0; height: 100px; }
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: orange;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: darkorange;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pikachu Dançando e Soltando Raio</h1>
+  <img src="https://media.tenor.com/62BvS9ApSgEAAAAi/pikachu-dancing.gif" class="pikachu" alt="Pikachu dançando">
+  <div id="raio-container"></div>
+  <button onclick="soltarRaio()">⚡ Soltar Raio</button>
+
+  <script>
+    function soltarRaio() {
+      const raio = document.createElement('div');
+      raio.classList.add('raio');
+      document.getElementById('raio-container').appendChild(raio);
+      setTimeout(() => raio.remove(), 500); // remove o raio após a animação
+    }
+  </script>
+</body>
+</html>

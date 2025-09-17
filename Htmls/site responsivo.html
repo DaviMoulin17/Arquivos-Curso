@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório - Site Responsivo</title>
+    <style>
+        :root {
+            --primary-color: #0077b6;
+            --secondary-color: #023e8a;
+            --background-color: #f1f1f1;
+            --text-color: #333;
+            --font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            font-family: var(--font-family);
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-top: 40px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #aaa;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #555;
+        }
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Relatório de Desenvolvimento do Site Responsivo</h1>
+    </header>
+
+    <section>
+        <h2>Introdução</h2>
+        <p>
+            Este projeto tem como objetivo desenvolver um site responsivo que se adapta a diferentes tamanhos de tela,
+            como celulares, tablets e desktops. Buscamos oferecer uma navegação intuitiva, moderna e agradável visualmente,
+            utilizando técnicas como Flexbox, CSS Grid e Media Queries.
+        </p>
+    </section>
+
+    <section>
+        <h2>Desenvolvimento</h2>
+        <p>
+            A estrutura do site foi construída com HTML semântico, utilizando elementos como <code>&lt;header&gt;</code>,
+            <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code> e <code>&lt;footer&gt;</code>. Para o layout dos posts recentes,
+            optamos pelo uso do CSS Grid, que proporciona uma organização dinâmica dos elementos na tela.<br><br>
+            A responsividade foi aplicada com Media Queries, que ajustam o layout de acordo com o tamanho da tela. As principais
+            quebras são:
+        </p>
+        <ul>
+            <li><strong>Mobile (até 600px)</strong>: Layout em coluna, menu simplificado e imagens ajustadas.</li>
+            <li><strong>Tablet (601px a 900px)</strong>: Grid com duas colunas e espaçamentos maiores.</li>
+            <li><strong>Desktop (acima de 901px)</strong>: Grid com três ou mais colunas, sidebar e maior aproveitamento do espaço.</li>
+        </ul>
+        <p>
+            Também foram adicionadas transições suaves em botões e links para uma melhor experiência do usuário, além de variáveis CSS
+            para facilitar a manutenção das cores, fontes e espaçamentos.
+        </p>
+    </section>
+
+    <section>
+        <h2>Conclusão</h2>
+        <p>
+            O desenvolvimento deste site proporcionou uma compreensão prática sobre como criar layouts responsivos e modernos.
+            A junção de Flexbox, Grid e Media Queries foi essencial para garantir que o site se comporte bem em diferentes dispositivos.
+            Esse projeto reforçou a importância de um design bem planejado, acessível e funcional.
+        </p>
+    </section>
+
+    <section>
+        <h2>Tabela de Recursos Utilizados</h2>
+        <table>
+            <tr>
+                <th>Recurso</th>
+                <th>Descrição</th>
+            </tr>
+            <tr>
+                <td>HTML Semântico</td>
+                <td>Uso de tags como header, nav, main e footer para organização e acessibilidade.</td>
+            </tr>
+            <tr>
+                <td>CSS Grid</td>
+                <td>Organização dos cards de posts de forma flexível e responsiva.</td>
+            </tr>
+            <tr>
+                <td>Media Queries</td>
+                <td>Adaptação do layout para diferentes tamanhos de tela.</td>
+            </tr>
+            <tr>
+                <td>Transições</td>
+                <td>Efeitos suaves em botões e links para melhorar a experiência do usuário.</td>
+            </tr>
+            <tr>
+                <td>Variáveis CSS</td>
+                <td>Centralização de cores, fontes e espaçamentos para facilitar manutenção.</td>
+            </tr>
+        </table>
+    </section>
+
+    <footer>
+        <p>Desenvolvido por: Davi Moulin - Projeto de Front-End</p>
+    </footer>
+</body>
+</html>

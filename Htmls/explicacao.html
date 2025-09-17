@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galeria, Sprites e Seletores de Atributo</title>
+  <style>
+    /* 1 - Galeria de imagens usando flexbox */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+    .gallery img {
+      width: 30%;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.1);
+    }
+
+    /* 2 - Image sprites (exemplo simplificado) */
+    .sprite {
+      width: 50px;
+      height: 50px;
+      background-image: url('https://i.imgur.com/6b7rXfQ.png'); /* sprite com 3 ícones na horizontal */
+      background-repeat: no-repeat;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .icon-home {
+      background-position: 0 0;
+    }
+    .icon-search {
+      background-position: -50px 0;
+    }
+    .icon-settings {
+      background-position: -100px 0;
+    }
+
+    /* 3 - Seletores de atributo */
+    /* Inputs tipo texto ficam com borda azul */
+    input[type="text"] {
+      border: 2px solid blue;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    /* Links que começam com https ficam verdes */
+    a[href^="https"] {
+      color: green;
+      font-weight: bold;
+    }
+    /* Qualquer elemento com atributo data-info fica com fundo amarelo */
+    [data-info] {
+      background-color: #fff3cd;
+      padding: 5px;
+      margin-top: 10px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Galeria, Image Sprites e Seletores de Atributo</h1>
+
+  <!-- Galeria -->
+  <section>
+    <h2>Galeria de Imagens</h2>
+    <div class="gallery">
+      <img src="https://via.placeholder.com/150/3498db/fff?text=1" alt="Imagem 1" />
+      <img src="https://via.placeholder.com/150/e74c3c/fff?text=2" alt="Imagem 2" />
+      <img src="https://via.placeholder.com/150/2ecc71/fff?text=3" alt="Imagem 3" />
+      <img src="https://via.placeholder.com/150/f39c12/fff?text=4" alt="Imagem 4" />
+      <img src="https://via.placeholder.com/150/9b59b6/fff?text=5" alt="Imagem 5" />
+    </div>
+  </section>
+
+  <!-- Image Sprites -->
+  <section>
+    <h2>Image Sprites (ícones)</h2>
+    <p>Ícones usando uma única imagem sprite:</p>
+    <span class="sprite icon-home" title="Home"></span>
+    <span class="sprite icon-search" title="Search"></span>
+    <span class="sprite icon-settings" title="Settings"></span>
+  </section>
+
+  <!-- Selectors de atributo -->
+  <section>
+    <h2>Seletores de Atributo</h2>
+    <form>
+      <label for="nome">Nome (input type="text"):</label><br />
+      <input type="text" id="nome" name="nome" /><br />
+
+      <label for="email">Email (input type="email"):</label><br />
+      <input type="email" id="email" name="email" /><br />
+    </form>
+
+    <p>Links:</p>
+    <a href="https://google.com">Link seguro (https)</a><br />
+    <a href="http://example.com">Link não seguro (http)</a>
+
+    <p data-info="dica">Este parágrafo tem atributo <code>data-info</code> e recebe estilo especial.</p>
+  </section>
+</body>
+</html>
