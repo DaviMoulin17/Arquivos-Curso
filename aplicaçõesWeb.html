@@ -1,162 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Formulário de Cadastro</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f1f3f5;
+ <meta charset="UTF-8">
+ <title>Lista de Tarefas</title>
+ <style>
+body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('https://i.pinimg.com/736x/1e/82/6e/1e826eed3bcf1789e74f2fce229316c6.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      transition: background 0.3s, color 0.3s;
-    }
-    .card {
-      background-color: #2b2d42;
-      border: 2px solid #2b2d42;
-      padding: 12px;
-      width: 320px;
-      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
-      border-radius: 10px;
-      transition: background 0.3s, border 0.3s;
-    }
-    .card h2 {
-      text-align: center;
-      margin-top: 0;
-      color: #fff7f8;
-    }
-    label {
-      display: block;
-      margin-top: 8px;
-      font-weight: bold;
-      color: white;
-    }
-    input {
-      width: 100%;
-      padding: 6px;
-      margin-top: 4px;
-      box-sizing: border-box;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-    }
-    .actions {
-      margin-top: 12px;
-      display: flex;
-      gap: 8px;
-      justify-content: space-between;
-    }
-    .actions input, .actions button {
-      padding: 8px 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .actions input {
-      background-color: #1fa045;
-      color: #fff;
-    }
-    .btn-limpar {
-      background-color: #b11b1b;
-      color: #fff;
-    }
-    .btn-limpar:hover {
-      background-color: #861f1f;
-    }
-    .btn-escuro {
-      background-color: #0c4d8f;
-      color: #fff;
-    }
-    .btn-escuro:hover {
-      background-color: #3085da;
-    }
-    .actions input:hover {
-      background-color: #355c42;
-    }
-    .dark-mode {
-      background-color: #121212;
-      color: #ffffff;
-    }
-    .dark-mode .card {
-      background-color: #1e1e1e;
-      border: 2px solid #ffffff;
-    }
-    .dark-mode .card h2,
-    .dark-mode label {
-      color: #ffffff;
-    }
-  </style>
-
-  <script>
-    function validarFormulario() {
-      const nome = document.getElementById("nome").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value.trim();
-      const telefone = document.getElementById("telefone").value.trim();
-      const idade = document.getElementById("idade").value.trim();
-
-      const telefoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
-
-      if (!nome || !email || !senha || !telefone || !idade) {
-        alert("Por favor, preencha todos os campos!");
-        return false;
-      }
-      if (!telefoneRegex.test(telefone)) {
-        alert("Telefone inválido! Use formato (99) 99999-9999.");
-        return false;
-      }
-      if (parseInt(idade) < 1) {
-        alert("Idade inválida!");
-        return false;
-      }
-      return true;
+      margin: 0;
+      color: #fcfcff;
     }
 
-    function enviarFormulario(event) {
-      event.preventDefault();
-      if (validarFormulario()) {
-        alert("Cadastro realizado com sucesso!");
-        document.getElementById("formCadastro").reset();
-      }
-    }
+  .todo-box {
+    width: 400px;                  
+    padding: 30px;                 
+    background-color: #2b2d42;    
+    border: 2px solid #2b2d42;      
+    border-radius: 12px;        
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2); 
+    text-align: center;            
+  }
+  input {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    width: 250px;
+    margin-right: 10px;
+  }
+  button {
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: none;
+    background-color: #1fa045;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:hover {
+    background-color: #24643a;
+  }
+  #lista {
+   margin-top: 20px;
+   padding: 0;
+   align-items: center;
+   display: flex;
+   flex-direction: column;
+  }
+  li {
+   list-style: none;
+   margin: 5px;
+   padding: 8px;
+   background: #f0f0f0;
+   color: #000000;
+   border-radius: 4px;
+   width: 300px;
+   display: flex;
+   justify-content:space-between;
+   align-items: center;
+  }
+  li button {
+    background-color: #d80229;
+    padding: 5px 10px;
+  }
+  li button:hover {
+    background-color: #ff3d6d;
+  }
+  
+ </style>
+ <script>
+  function adicionarTarefa() {
+   let input = document.getElementById("tarefa");
+   let valor = input.value;
+   if (valor === "") {
+    alert("Digite uma tarefa!");
+    return;
+   }
+   let li = document.createElement("li");
+   li.innerText = valor;
 
-    function limparFormulario() {
-      document.getElementById("formCadastro").reset();
-    }
+   let botaoRemover = document.createElement("button");
+   botaoRemover.innerText = "Remover";
+   botaoRemover.onclick = function() {
+    li.parentNode.removeChild(li);
+   };
 
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-    }
-  </script>
+   li.appendChild(botaoRemover);
+   document.getElementById("lista").appendChild(li);
+   input.value = "";
+  }
+ </script>
 </head>
 <body>
-  <div class="card">
-    <h2>Cadastro</h2>
-    <form id="formCadastro" onsubmit="enviarFormulario(event)">
-      <label for="nome">Nome</label>
-      <input type="text" id="nome" name="nome">
-
-      <label for="email">E-mail</label>
-      <input type="text" id="email" name="email">
-
-      <label for="senha">Senha</label>
-      <input type="password" id="senha" name="senha">
-
-      <label for="telefone">Telefone</label>
-      <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999">
-
-      <label for="idade">Idade</label>
-      <input type="number" id="idade" name="idade" min="1" max="120">
-
-      <div class="actions">
-        <input type="submit" value="Cadastrar">
-        <button type="button" class="btn-limpar" onclick="limparFormulario()">Limpar</button>
-        <button type="button" class="btn-escuro" onclick="toggleDarkMode()">🌙 Escuro</button>
-      </div>
-    </form>
-  </div>
+<div class="todo-box">
+ <h2>Minha Lista de Tarefas</h2>
+ <input type="text" id="tarefa" placeholder="Digite uma tarefa">
+ <button onclick="adicionarTarefa()">Adicionar</button>
+ <ul id="lista"></ul>
+</div>
 </body>
 </html>
