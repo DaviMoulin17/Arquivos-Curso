@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Tarefas</title>
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('https://i.pinimg.com/736x/1e/82/6e/1e826eed3bcf1789e74f2fce229316c6.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #fcfcff;
+}
+.todo-box {
+  width: 400px;
+  padding: 30px;
+  background-color: #2b2d42;
+  border: 2px solid #2b2d42;
+  border-radius: 12px;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  width: 250px;
+  margin-right: 10px;
+}
+button {
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: none;
+  background-color: #19a838;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+button:hover { 
+  background-color: #24643a;
+}
+button.editar {
+  background-color: #2196f3; 
+  color: white;
+}
+
+button.editar:hover {
+  background-color: #1976d2; 
+}
+
+button.remover {
+  background-color: #d80229; 
+  color: white;
+}
+
+button.remover:hover {
+  background-color: #ff3d6d; 
+}
+
+#lista {
+  margin-top: 20px;
+  padding: 0;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+li {
+  list-style: none;
+  margin: 5px;
+  padding: 8px;
+  background: #f0f0f0;
+  color: #000000;
+  border-radius: 4px;
+  width: 300px;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+}
+
+.feedback {
+  height: 20px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #099709;
+}
+</style>
+</head>
+<body>
+<div class="todo-box">
+  <h2>Minha Lista de Tarefas</h2>
+  <input type="text" id="tarefa" placeholder="Digite uma tarefa">
+  <button onclick="adicionarTarefa()">Adicionar</button>
+  <p class="feedback" id="feedback"></p>
+  <ul id="lista"></ul>
+</div>
+
+<script>
+let tarefas = [];
+let editIndex = -1;
+
+const lista = document.getElementById("lista");
+const input = document.getElementById("tarefa");
+const feedback = document.getElementById("feedback");
+
+window.onload = () => {
+  const dados = JSON.parse(localStorage.getItem("tarefas"));
+  if(dados) tarefas = dados;
+  renderizarLista();
+}
+
+function adicionarTarefa() {
+  const valor = input.value.trim();
+  if(valor === "") {
+    mostrarFeedback("Digite algo antes", "red");
+    return;
+  }
+  if(tarefas.includes(valor) && editIndex === -1) {
+    mostrarFeedback("Tarefa já existe", "red");
+    return;
+  }
+
+  if(editIndex >= 0) {
+    tarefas[editIndex] = valor;
+    editIndex = -1;
+    mostrarFeedback("Tarefa editada");
+  } else {
+    tarefas.push(valor);
+    mostrarFeedback("Tarefa adicionada");
+  }
+
+  input.value = "";
+  salvarLocalStorage();
+  renderizarLista();
+}
+
+function renderizarLista() {
+  lista.innerHTML = "";
+  tarefas.forEach((tarefa, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <span>${tarefa}</span>
+      <div>
+        <button class="editar" onclick="editarTarefa(${index})">Editar</button>
+        <button class="remover" onclick="removerTarefa(${index})">Remover</button>
+      </div>
+    `;
+    lista.appendChild(li);
+  });
+}
+
+function removerTarefa(index) {
+  tarefas.splice(index,1);
+  salvarLocalStorage();
+  renderizarLista();
+  mostrarFeedback("Tarefa removida");
+}
+
+function editarTarefa(index) {
+  input.value = tarefas[index];
+  editIndex = index;
+  input.focus();
+}
+
+function salvarLocalStorage() {
+  localStorage.setItem("tarefas", JSON.stringify(tarefas));
+}
+
+function mostrarFeedback(msg, cor = "green") {
+  feedback.textContent = msg;
+  feedback.style.color = cor;
+  setTimeout(()=> { feedback.textContent = ""; }, 2000);
+}
+</script>
+</body>
+</html>
